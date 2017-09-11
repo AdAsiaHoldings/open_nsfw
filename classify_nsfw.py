@@ -14,12 +14,12 @@ import time
 from PIL import Image
 from StringIO import StringIO
 import caffe
-
+from urllib2 import urlopen
 
 def resize_image(data, sz=(256, 256)):
     """
-    Resize image. Please use this resize logic for best results instead of the 
-    caffe, since it was used to generate training dataset 
+    Resize image. Please use this resize logic for best results instead of the
+    caffe, since it was used to generate training dataset
     :param str data:
         The image data
     :param sz tuple:
@@ -27,8 +27,7 @@ def resize_image(data, sz=(256, 256)):
     :returns bytearray:
         A byte array with the resized image
     """
-    img_data = str(data)
-    im = Image.open(StringIO(img_data))
+    im = Image.open(urlopen(data))
     if im.mode != "RGB":
         im = im.convert('RGB')
     imr = im.resize(sz, resample=Image.BILINEAR)
